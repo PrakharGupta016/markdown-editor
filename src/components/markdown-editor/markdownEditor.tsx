@@ -7,7 +7,7 @@ const trimHashes = (hashString: string) => {
   const ch: string = "#";
   const sz: number = hashString.length;
   let idx = -1;
-  let text = "";
+  let text = hashString;
   for (let i = 0; i < sz; i++) {
     if (hashString.charAt(i) == ch) {
       idx = i;
@@ -35,11 +35,11 @@ const MarkDownEditor = () => {
   const [result, setResult] = useState("");
 
   const convertMarkdown = (markdown: string) => {
-    const lines = markdownString.split("\n");
+    const lines = markdown.split("\n");
     const filteredLines = lines.filter((val) => val !== "");
     let result = filteredLines.map((val) => trimHashes(val));
     const stringResult = result.join("\n");
-
+    console.log(result);
     setResult((prev) => stringResult);
     setMarkDownString((prev) => markdown);
   };
