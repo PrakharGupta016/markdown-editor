@@ -3,6 +3,16 @@ import { Textarea } from "../common/shadcn/TextArea";
 import Layers from "../common/styled-components/layers";
 import parse from "html-react-parser";
 
+
+const headingStyles: { [key: number]: string } = {
+  1: "text-3xl font-bold",
+  2: "text-2xl font-semibold",
+  3: "text-xl font-semibold",
+  4: "text-lg font-medium",
+  5: "text-base font-medium",
+  6: "text-sm font-medium",
+};
+
 const trimHashes = (hashString: string) => {
   const ch: string = "#";
   const sz: number = hashString.length;
@@ -16,7 +26,7 @@ const trimHashes = (hashString: string) => {
 
   if (idx < 6 && idx >= 0) {
     text =
-      `<h${idx + 1}>` + hashString.substring(idx + 1, sz) + `</h${idx + 1}>`;
+      `<h${idx + 1} className=${headingStyles[idx+1]}>` + hashString.substring(idx + 1, sz) + `</h${idx + 1}>`;
   }
 
   text = text.replace(/\*\*\*(.*?)\*\*\*/g, "<strong><em>$1</em></strong>");
@@ -32,28 +42,28 @@ const trimHashes = (hashString: string) => {
 
 const MarkDownEditor = () => {
   const [markdownString, setMarkDownString] = useState("");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<string[]>([]);
 
   const convertMarkdown = (markdown: string) => {
     const lines = markdown.split("\n");
-    const filteredLines = lines.filter((val) => val !== "");
-    let result = filteredLines.map((val) => trimHashes(val));
-    const stringResult = result.join("\n");
-    console.log(result);
-    setResult((prev) => stringResult);
+    let result = lines.map((val) => trimHashes(val));
+    console.log(result)
+    setResult((prev) => result);
     setMarkDownString((prev) => markdown);
   };
 
   return (
     <>
       <Layers>
+        <div className="p-4 grid ">
         <h1>Enter your markdown here </h1>
         <Textarea
           value={markdownString}
           onChange={(e) => convertMarkdown(e.target.value)}
         />
         <h1>result</h1>
-        <div>{parse(result)}</div>
+        <div>{result.map((val)=>(<div>{parse(val)}</div>))}</div>
+        </div>
       </Layers>
     </>
   );
