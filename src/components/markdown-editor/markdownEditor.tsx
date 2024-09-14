@@ -32,7 +32,7 @@ const convertMarkdown = (markdown: string) => {
   text = text.replace(/^\d+\.\s+(.*)/gm, '<li>$1</li>');
 
 // If needed, wrap the whole list in <ol> tags
-  text = text.replace(/(<li>.*<\/li>)/gms, '<ol>$1</ol>');
+  text = text.replace(/(<li>.*<\/li>)/gms, '<ol className="list-decimal ml-3 pl-4">$1</ol>');
 
   // Wrap standalone lines with <p> tags (except if they are headings or blockquotes)
   text = text.replace(/^(?!<h|<blockquote|<br|<ol)(.*)$/gm, "<p>$1</p>");
