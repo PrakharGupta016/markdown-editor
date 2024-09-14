@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Textarea } from "../common/shadcn/TextArea";
 import Layers from "../common/styled-components/layers";
 import parse from "html-react-parser";
@@ -19,14 +19,14 @@ const convertMarkdown = (markdown: string) => {
   text = text.replace(/^\> (.*)$/gm, "<blockquote classname='p-4 my-4 bg-gray-50 border-l-4 border-gray-300 dark:border-gray-500 dark:bg-gray-800'><p classname='text-xl italic font-medium leading-relaxed text-gray-900 dark:text-white'>$1</p></blockquote>");
 
   // Convert bold and italic markdown
-  text = text.replace(/\*\*\*(.*?)\*\*\*/g, "<strong><em>$1</em></strong>");
-  text = text.replace(/\*\*(.*?)\*\*|__(.*?)__/g, "<strong>$1$2</strong>");
-  text = text.replace(/\*(.*?)\*|_(.*?)_/g, "<em>$1$2</em>");
+  text = text.replace(/\*\*\*(.*?)\*\*\*/gm, "<strong><em>$1</em></strong>");
+  text = text.replace(/\*\*(.*?)\*\*|__(.*?)__/gm, "<strong>$1$2</strong>");
+  text = text.replace(/\*(.*?)\*|_(.*?)_/gm, "<em>$1$2</em>");
   text = text.replace(/^\s*$/gm,'<br/>')
   //code 
-  text = text.replace(/\`(.*?)\`/g, "<code>$1</code>");
+  text = text.replace(/\`(.*?)\`/gm, "<code>$1</code>");
   //strike
-  text = text.replace(/\~\~(.*?)\~\~/g, "<strike>$1</strike>");
+  text = text.replace(/\~\~(.*?)\~\~/gm, "<strike>$1</strike>");
   //link
   text = text.replace(/\[(.*?)\]\((.*?)\)/g,'<a href=$2>$1</a>')
   text = text.replace(/^\d+\.\s+(.*)/gm, '<li>$1</li>');
