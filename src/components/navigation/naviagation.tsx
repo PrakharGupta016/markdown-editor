@@ -1,4 +1,5 @@
 import { headingStyles } from "@/helpers/helpers";
+import { Button } from "../common/shadcn/Button";
 
 const Navigation = ()=>{
     return(<div className="flex justify-center p-2">

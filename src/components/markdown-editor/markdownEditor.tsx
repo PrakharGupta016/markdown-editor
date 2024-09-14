@@ -3,6 +3,7 @@ import { Textarea } from "../common/shadcn/TextArea";
 import Layers from "../common/styled-components/layers";
 import parse from "html-react-parser";
 import { headingStyles } from "@/helpers/helpers";
+import { Button } from "../common/shadcn/Button";
 
 const convertMarkdown = (markdown: string) => {
 
@@ -48,10 +49,24 @@ const MarkDownEditor = () => {
     setResult((prev) => result);
     setMarkDownString((prev) => markdown);
   };
+  const downloadHandler = (markdown:string) => {
+    const blob = new Blob([markdown], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "content.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <>
       <Layers>
+        <div className="p-5">
+        <Button onClick={()=>downloadHandler(result)}> download </Button>
+        </div>
         <div className="p-5 grid grid-cols-2 gap-4">
           <div>
             <h1 className={headingStyles[2]}>Enter your markdown here </h1>
